@@ -12,33 +12,33 @@ double Pelicula::caclularPopularidad(const string& genero, int& duracion, const 
 	int basePopularidadGenero = 0;
 	double factorDuracion = 0.5;
 	int clasificacionFactor = 0;
-	int factorClasificacion = 3;
+	//int factorClasificacion = 3;
 	double factorIdioma = 0;
 
-	if (genero == "Accion") {
+	if (genero == "Accion" || genero == "accion") {
 		basePopularidadGenero = 100;
 	}
-	else if (genero == "Comedia") {
+	else if (genero == "Comedia" || genero == "comedia") {
 		basePopularidadGenero = 80;
 	}
-	else if (genero == "Drama") {
+	else if (genero == "Drama" || genero == "drama") {
 		basePopularidadGenero = 70;
 	}
 
-	if (clasificacion == "G") {
+	if (clasificacion == "G" || clasificacion == "g") {
 		clasificacionFactor = 0;
 	}
-	else if (clasificacion == "PG") {
+	else if (clasificacion == "PG" || clasificacion == "pg") {
 		clasificacionFactor = 5;
 	}
-	else if (clasificacion == "PG-13") {
+	else if (clasificacion == "PG-13" || clasificacion == "pg-13") {
 		clasificacionFactor = 10;
 	}
-	else if (clasificacion == "R") {
+	else if (clasificacion == "R" || clasificacion == "r") {
 		clasificacionFactor = 15;
 	}
 
-	if (idioma == "Espaniol") {
+	if (idioma == "Espaniol" || idioma == "espaniol" || idioma == "Español" || idioma == "español") {
 		factorIdioma = 1.2;
 	}
 	else if (idioma == "Ingles") {
@@ -48,7 +48,7 @@ double Pelicula::caclularPopularidad(const string& genero, int& duracion, const 
 		factorIdioma = 0.9;
 	}
 
-	popularidad = (basePopularidadGenero + duracion * factorDuracion - clasificacionFactor * factorClasificacion) * factorIdioma;
+	popularidad = (basePopularidadGenero + duracion * factorDuracion - clasificacionFactor * clasificacionFactor) * factorIdioma;
 	return popularidad;
 }
 

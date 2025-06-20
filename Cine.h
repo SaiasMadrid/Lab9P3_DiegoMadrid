@@ -1,5 +1,7 @@
 #pragma once
 #include "Pelicula.h"
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 using namespace std;
 
