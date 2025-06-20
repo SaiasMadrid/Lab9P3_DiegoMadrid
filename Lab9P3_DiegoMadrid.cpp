@@ -5,8 +5,9 @@ using namespace std;
 Cine absoluteCinema;
 
 void menu() {
+
 	int resp;
-	bool menu = true;
+	bool menu = true; // Check para continuar con el menu
 	while (menu == true) {
 		cout << "---------- Menu ----------" << endl;
 		cout << "1) Agregar Pelicula" << endl;
@@ -54,7 +55,7 @@ void menu() {
 
 		case 7:
 			cout << "Cheque bro" << endl;
-			menu = false;
+			menu = false; // Se rompe el while aca
 			break;
 
 		default:

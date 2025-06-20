@@ -38,13 +38,15 @@ void Cine::agregarPelicula() {
 	cout << "Ingrese el idioma (Espaniol, Ingles, Italiano): ";
 	cin >> idioma;
 	if (idioma != "espaniol" && idioma != "Espaniol" && idioma != "ingles" && idioma != "Ingles" &&
-		idioma != "italiano" && idioma != "Italiano" && idioma != "español" && idioma != "Español") {
+		idioma != "italiano" && idioma != "Italiano" && idioma != "espanol" && idioma != "Espanol") {
 		cout << "Idioma invalido" << endl;
 		return;
 	}
-
+	
+	// crear pelicula temporal para poder calcular popularidad
 	Pelicula tempMovie(nombre, genero, duracion, clasificacion, idioma, 0.0);
 	popularidad = tempMovie.caclularPopularidad(genero, duracion, clasificacion, idioma);
+	// pelicula con popularidad y tipo puntero para mandar al vector
 	Pelicula* newMovie = new Pelicula(nombre, genero, duracion, clasificacion, idioma, popularidad);
 	peliculas.push_back(newMovie);
 
@@ -57,6 +59,7 @@ void Cine::listarPeliculas() {
 		return;
 	}
 	
+	// listar crudo sin sort
 	cout << "----- Peliculas -----\n" << endl;
 	int cont = 0;
 	for (Pelicula* movies : peliculas) {
@@ -73,6 +76,7 @@ void Cine::ordenarDesc() {
 		return;
 	}
 
+	// bubble sort para ordenar
 	int pelis = peliculas.size();
 	for (int i = 0; i < pelis - 1; i++) {
 		for (int j = 0; j < pelis - i - 1; j++) {
@@ -92,6 +96,7 @@ void Cine::ordenarAsc() {
 		return;
 	}
 
+	// bubble sort para ordenar
 	int pelis = peliculas.size();
 	for (int i = 0; i < pelis - 1; i++) {
 		for (int j = 0; j < pelis - i - 1; j++) {
@@ -118,7 +123,7 @@ void Cine::guardarPeliculas() {
 	}
 
 	string str;
-	file << "Titulo - Genero - Duracion - Clasificacion - Idioma - Popularidad" << endl;
+	file << "--> Titulo - Genero - Duracion - Clasificacion - Idioma - Popularidad <--" << endl;
 	for (Pelicula* movies : peliculas) {
 		file << movies->getTitulo() << ","
 			<< movies->getGenero() << ","
@@ -132,7 +137,7 @@ void Cine::guardarPeliculas() {
 }
 
 void Cine::cargarPeliculas() {
-	peliculas.clear();
+	peliculas.clear(); // evitar bulto
 
 	ifstream file("Peliculas.txt");
 	if (!file.is_open()) {
@@ -141,25 +146,26 @@ void Cine::cargarPeliculas() {
 	}
 
 	string linea;
-	getline(file, linea);
+	getline(file, linea); // se salta la primera linea
 
 	while (getline(file, linea)) {
-		istringstream iss(linea);
+		istringstream print(linea);
 		string titulo, genero, duracionStr, clasificacion, idioma, popularidadStr;
 
-		getline(iss, titulo, ',');
-		getline(iss, genero, ',');
-		getline(iss, duracionStr, ',');
-		getline(iss, clasificacion, ',');
-		getline(iss, idioma, ',');
-		getline(iss, popularidadStr, ',');
+		getline(print, titulo, ',');
+		getline(print, genero, ',');
+		getline(print, duracionStr, ',');
+		getline(print, clasificacion, ',');
+		getline(print, idioma, ',');
+		getline(print, popularidadStr, ',');
 
 		int duracion = stoi(duracionStr);
-		double popularidad = stod(popularidadStr);
+		double popularidad = stod(popularidadStr); // para conseguir los ints y doubles
 
 		Pelicula* newMovie = new Pelicula(titulo, genero, duracion, clasificacion, idioma, popularidad);
-		peliculas.push_back(newMovie);
+		peliculas.push_back(newMovie); // se manda la pelicula leida
 	}
 	file.close();
-	cout << "Peliculas cargados exitosamente" << endl;
+
+	cout << "Peliculas cargadas en el vector" << endl;
 }

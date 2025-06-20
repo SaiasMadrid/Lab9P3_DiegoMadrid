@@ -10,18 +10,18 @@ Pelicula::~Pelicula() {
 
 double Pelicula::caclularPopularidad(const string& genero, int& duracion, const string& clasificacion, const string& idioma) {
 	int basePopularidadGenero = 0;
-	double factorDuracion = 0.5;
+	double factorDuracion = 0.5; // constante
 	int clasificacionFactor = 0;
 	double factorIdioma = 0;
 
 	if (genero == "Accion" || genero == "accion") {
-		basePopularidadGenero = 100;
+		basePopularidadGenero = rand() % 21 + 80;
 	}
 	else if (genero == "Comedia" || genero == "comedia") {
-		basePopularidadGenero = 80;
+		basePopularidadGenero = rand() % 11 + 70;
 	}
 	else if (genero == "Drama" || genero == "drama") {
-		basePopularidadGenero = 70;
+		basePopularidadGenero = rand() % 21 + 50;
 	}
 
 	if (clasificacion == "G" || clasificacion == "g") {
@@ -48,7 +48,7 @@ double Pelicula::caclularPopularidad(const string& genero, int& duracion, const 
 	}
 
 	popularidad = (basePopularidadGenero + duracion * factorDuracion - clasificacionFactor * clasificacionFactor) * factorIdioma;
-	return abs(popularidad);
+	return abs(popularidad); // abs() porque me tira negativos por multiplicar clasificacionFactor 2 veces
 }
 
 string Pelicula::getTitulo() {

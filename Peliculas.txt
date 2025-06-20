@@ -1,10 +1,10 @@
-Título,Género,Duración,Clasificación,Idioma,Popularidad
+--> Titulo - Genero - Duracion - Clasificacion - Idioma - Popularidad <--
 Cars,Accion,101,G,Espaniol,50.5
+El Pianista,Drama,105,R,Italiano,65
 Need for Speed,Accion,110,PG,Ingles,67.5
-Mad Max Fury Road,Accion,98,PG-13,Ingles,85.0
-Rapidos y Furiosos 7,Accion,100,R,Espaniol,90.0
 Superbad,Comedia,95,PG-13,Ingles,72.5
-La Gran Apuesta,Comedia,100,R,Espaniol,78.0
-El Pianista,Drama,105,R,Italiano,65.0
-John Wick,Accion,95,R,Ingles,88.0
 The Hangover,Comedia,96,PG-13,Espaniol,75.5
+La Gran Apuesta,Comedia,100,R,Espaniol,78
+Mad Max Fury Road,Accion,98,PG-13,Ingles,85
+John Wick,Accion,95,R,Ingles,88
+Rapidos y Furiosos 7,Accion,100,R,Espaniol,90
