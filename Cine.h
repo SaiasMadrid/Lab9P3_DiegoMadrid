@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 class Cine {

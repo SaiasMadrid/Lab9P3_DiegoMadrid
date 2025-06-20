@@ -12,7 +12,6 @@ double Pelicula::caclularPopularidad(const string& genero, int& duracion, const 
 	int basePopularidadGenero = 0;
 	double factorDuracion = 0.5;
 	int clasificacionFactor = 0;
-	//int factorClasificacion = 3;
 	double factorIdioma = 0;
 
 	if (genero == "Accion" || genero == "accion") {
@@ -41,15 +40,15 @@ double Pelicula::caclularPopularidad(const string& genero, int& duracion, const 
 	if (idioma == "Espaniol" || idioma == "espaniol" || idioma == "Español" || idioma == "español") {
 		factorIdioma = 1.2;
 	}
-	else if (idioma == "Ingles") {
+	else if (idioma == "Ingles" || idioma == "ingles") {
 		factorIdioma = 1.0;
 	}
-	else if (idioma == "Frances") {
+	else if (idioma == "Italiano" || idioma == "italiano") {
 		factorIdioma = 0.9;
 	}
 
 	popularidad = (basePopularidadGenero + duracion * factorDuracion - clasificacionFactor * clasificacionFactor) * factorIdioma;
-	return popularidad;
+	return abs(popularidad);
 }
 
 string Pelicula::getTitulo() {

@@ -18,6 +18,7 @@ void menu() {
 		cout << "7) Salir" << endl;
 		cout << "Ingrese su seleccion: ";
 		cin >> resp;
+		cout << endl;
 
 	
 		switch (resp) {

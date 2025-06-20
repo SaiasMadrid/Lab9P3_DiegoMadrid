@@ -16,7 +16,9 @@ void Cine::agregarPelicula() {
 	double popularidad;
 
 	cout << "Ingrese el nombre de la pelicula: ";
-	cin >> nombre;
+	cin.ignore();
+	getline(cin, nombre);
+
 	cout << "Ingrese el genero (Accion, Comedia, Drama): ";
 	cin >> genero;
 	if (genero != "Accion" && genero != "Comedia" && genero != "Drama" &&
@@ -24,6 +26,7 @@ void Cine::agregarPelicula() {
 		cout << "Genero invalido" << endl;
 		return;
 	}
+
 	cout << "Ingrese la clasificacion (G, PG, PG-13, R): ";
 	cin >> clasificacion;
 	if (clasificacion != "g" && clasificacion != "G" && clasificacion != "pg" && clasificacion != "PG" &&
@@ -31,10 +34,11 @@ void Cine::agregarPelicula() {
 		cout << "Clasificacion Invalida" << endl;
 		return;
 	}
+
 	cout << "Ingrese el idioma (Espaniol, Ingles, Italiano): ";
 	cin >> idioma;
 	if (idioma != "espaniol" && idioma != "Espaniol" && idioma != "ingles" && idioma != "Ingles" &&
-		idioma != "frances" && idioma != "Frances" && idioma != "español" && idioma != "Español") {
+		idioma != "italiano" && idioma != "Italiano" && idioma != "español" && idioma != "Español") {
 		cout << "Idioma invalido" << endl;
 		return;
 	}
@@ -43,6 +47,8 @@ void Cine::agregarPelicula() {
 	popularidad = tempMovie.caclularPopularidad(genero, duracion, clasificacion, idioma);
 	Pelicula* newMovie = new Pelicula(nombre, genero, duracion, clasificacion, idioma, popularidad);
 	peliculas.push_back(newMovie);
+
+	cout << "Pelicula agregada" << endl;
 }
 
 void Cine::listarPeliculas() {
@@ -50,31 +56,18 @@ void Cine::listarPeliculas() {
 		cout << "No tenes peliculas bro" << endl;
 		return;
 	}
-
+	
+	cout << "----- Peliculas -----\n" << endl;
+	int cont = 0;
 	for (Pelicula* movies : peliculas) {
+		cout << cont << ") ";
 		movies->toString();
+		cout << endl;
+		cont++;
 	}
 }
 
 void Cine::ordenarDesc() {
-	if (peliculas.empty()) {
-		cout << "No hay peliculas guardadas" << endl;
-		return;
-	}
-
-	int pelis = peliculas.size();
-	for (int i = 0; i < pelis - 1; i++) {
-		for (int j = 0; j < pelis - i - 1; j++) {
-			if (peliculas[j]->getPopularidad() > peliculas[j + 1]->getPopularidad()) {
-				Pelicula* temp = peliculas[j];
-				peliculas[j] = peliculas[j + 1];
-				peliculas[j + 1] = temp;
-			}
-		}
-	}
-}
-
-void Cine::ordenarAsc() {
 	if (peliculas.empty()) {
 		cout << "No hay peliculas guardadas" << endl;
 		return;
@@ -90,12 +83,83 @@ void Cine::ordenarAsc() {
 			}
 		}
 	}
+	cout << "Pelicuas ordenadas descendentemente" << endl;
+}
+
+void Cine::ordenarAsc() {
+	if (peliculas.empty()) {
+		cout << "No hay peliculas guardadas" << endl;
+		return;
+	}
+
+	int pelis = peliculas.size();
+	for (int i = 0; i < pelis - 1; i++) {
+		for (int j = 0; j < pelis - i - 1; j++) {
+			if (peliculas[j]->getPopularidad() > peliculas[j + 1]->getPopularidad()) {
+				Pelicula* temp = peliculas[j];
+				peliculas[j] = peliculas[j + 1];
+				peliculas[j + 1] = temp;
+			}
+		}
+	}
+	cout << "Pelicuas ordenadas ascendentemente" << endl;
 }
 
 void Cine::guardarPeliculas() {
+	if (peliculas.empty() == true) {
+		cout << "No tenes pelicilas" << endl;
+		return;
+	}
 
+	ofstream file("Peliculas.txt");
+	if (!file.is_open()) {
+		cout << "Error al abrir el arcivo" << endl;
+		return;
+	}
+
+	string str;
+	file << "Titulo - Genero - Duracion - Clasificacion - Idioma - Popularidad" << endl;
+	for (Pelicula* movies : peliculas) {
+		file << movies->getTitulo() << ","
+			<< movies->getGenero() << ","
+			<< movies->getDuracion() << ","
+			<< movies->getClasificacion() << ","
+			<< movies->getIdioma() << ","
+			<< movies->getPopularidad() << endl;
+	}
+	file.close();
+	cout << "Peliculas guardadas en Peliculas.txt" << endl;
 }
 
 void Cine::cargarPeliculas() {
+	peliculas.clear();
 
+	ifstream file("Peliculas.txt");
+	if (!file.is_open()) {
+		cout << "Error al abrir el archivo para cargar" << endl;
+		return;
+	}
+
+	string linea;
+	getline(file, linea);
+
+	while (getline(file, linea)) {
+		istringstream iss(linea);
+		string titulo, genero, duracionStr, clasificacion, idioma, popularidadStr;
+
+		getline(iss, titulo, ',');
+		getline(iss, genero, ',');
+		getline(iss, duracionStr, ',');
+		getline(iss, clasificacion, ',');
+		getline(iss, idioma, ',');
+		getline(iss, popularidadStr, ',');
+
+		int duracion = stoi(duracionStr);
+		double popularidad = stod(popularidadStr);
+
+		Pelicula* newMovie = new Pelicula(titulo, genero, duracion, clasificacion, idioma, popularidad);
+		peliculas.push_back(newMovie);
+	}
+	file.close();
+	cout << "Peliculas cargados exitosamente" << endl;
 }
